@@ -1,1 +1,1 @@
-java -jar JavaBayes.j1.8.jar
+java -jar JavaBayesj18.jar

@@ -1,0 +1,48 @@
+// Bayesian network 
+network "InternalNetwork" { //5 variables and 5 probability distributions
+}
+variable  "TemperatureHigh" { //2 values
+	type discrete[2] {  "true"  "false" };
+	property "observed true" ;
+	property "position = (146, 336)" ;
+}
+variable  "ThermometerFaulty" { //2 values
+	type discrete[2] {  "true"  "false" };
+	property "position = (462, 469)" ;
+}
+variable  "ThermometerHighTemp" { //2 values
+	type discrete[2] {  "true"  "false" };
+	property "observed false" ;
+	property "position = (461, 363)" ;
+}
+variable  "ThermoelectricAlarmFaulty" { //2 values
+	type discrete[2] {  "true"  "false" };
+	property "position = (462, 174)" ;
+}
+variable  "ThermoelectricAlarmSounds" { //2 values
+	type discrete[2] {  "true"  "false" };
+	property "observed false" ;
+	property "position = (462, 271)" ;
+}
+probability (  "TemperatureHigh" ) { //1 variable(s) and 2 values
+	table 
+		0.02	// p(true | evidence )
+		0.98; 	// p(false | evidence );
+}
+probability (  "ThermometerFaulty"  "TemperatureHigh" ) { //2 variable(s) and 4 values
+	table 
+		 0.3 0.03 0.7 0.97;
+}
+probability (  "ThermometerHighTemp"  "TemperatureHigh"  "ThermometerFaulty" ) { //3 variable(s) and 8 values
+	table 
+		 0.9 0.95 0.99 0.001 0.1 0.05 0.01 0.999;
+}
+probability (  "ThermoelectricAlarmFaulty" ) { //1 variable(s) and 2 values
+	table 
+		0.02	// p(true | evidence )
+		0.98; 	// p(false | evidence );
+}
+probability (  "ThermoelectricAlarmSounds"  "TemperatureHigh"  "ThermoelectricAlarmFaulty" ) { //3 variable(s) and 8 values
+	table 
+		 0.997 0.9998 0.96 0.01 0.003 2.0E-4 0.04 0.99;
+}
